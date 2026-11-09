@@ -1,0 +1,159 @@
+
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Crear cuenta | GameVault{% endblock %}
+
+{% block content %}
+
+<style>
+    .registro-container {
+        min-height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 20px;
+    }
+
+    .registro-card {
+        width: 100%;
+        max-width: 480px;
+        background: #1d2638;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .registro-card h1 {
+        text-align: center;
+        color: #00d9ef;
+        margin-bottom: 12px;
+    }
+
+    .registro-subtitulo {
+        text-align: center;
+        color: #cbd5e1;
+        margin-bottom: 25px;
+    }
+
+    .registro-card label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+    }
+
+    .registro-card input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 12px;
+        background: #101827;
+        color: white;
+        border: 1px solid #40516b;
+        border-radius: 7px;
+    }
+
+    .registro-card input:focus {
+        outline: none;
+        border-color: #00d9ef;
+    }
+
+    .ayuda {
+        color: #aeb8c9;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .errores {
+        color: #ff7777;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    .registro-card button {
+        width: 100%;
+        padding: 13px;
+        background: #00bfd8;
+        color: #07111b;
+        border: none;
+        border-radius: 7px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .registro-card button:hover {
+        background: #00e5ff;
+    }
+
+    .registro-enlace {
+        text-align: center;
+        margin-top: 22px;
+        color: #cbd5e1;
+    }
+
+    .registro-enlace a {
+        color: #00d9ef;
+        text-decoration: none;
+    }
+</style>
+
+<div class="registro-container">
+
+    <div class="registro-card">
+
+        <h1>Crear cuenta</h1>
+
+        <p class="registro-subtitulo">
+            Únete a la comunidad de GameVault.
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {% for campo in formulario %}
+
+                <label for="{{ campo.id_for_label }}">
+                    {{ campo.label }}
+                </label>
+
+                {{ campo }}
+
+                {% if campo.help_text %}
+                    <div class="ayuda">
+                        {{ campo.help_text }}
+                    </div>
+                {% endif %}
+
+                {% for error in campo.errors %}
+                    <div class="errores">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+
+            {% endfor %}
+
+            {% for error in formulario.non_field_errors %}
+                <div class="errores">
+                    {{ error }}
+                </div>
+            {% endfor %}
+
+            <button type="submit">
+                Crear mi cuenta
+            </button>
+
+        </form>
+
+        <div class="registro-enlace">
+            ¿Ya tienes una cuenta?
+            <a href="{% url 'login' %}">
+                Inicia sesión
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

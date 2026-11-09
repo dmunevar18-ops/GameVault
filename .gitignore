@@ -1,0 +1,23 @@
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+
+# Base de datos local
+db.sqlite3
+
+# Variables y secretos
+.env
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos multimedia temporales
+media/*
+!media/juegos/
+!media/juegos/**

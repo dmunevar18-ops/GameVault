@@ -1,0 +1,247 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}GameVault{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'catalogo/css/estilos.css' %}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #10131d;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* BARRA DE NAVEGACIÓN */
+
+        .navbar {
+            width: 100%;
+            min-height: 82px;
+            background-color: #191f2e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 38px;
+        }
+
+        .logo {
+            color: #00d9ef;
+            font-size: 34px;
+            font-weight: bold;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .navbar-derecha {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar-derecha a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .navbar-derecha a:hover {
+            color: #00d9ef;
+        }
+
+        /* BOTONES */
+
+        .boton {
+            display: inline-block;
+            background-color: #00bfd8;
+            color: white !important;
+            padding: 12px 20px;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .boton:hover {
+            background-color: #00a9c4;
+        }
+
+        .form-logout {
+            display: inline;
+        }
+
+        /* CONTENIDO */
+
+        .contenido-principal {
+            width: 100%;
+            min-height: calc(100vh - 82px);
+        }
+
+        /* MENSAJES */
+
+        .mensajes {
+            padding: 15px 38px 0;
+        }
+
+        .mensaje {
+            background-color: #1d3547;
+            border-left: 4px solid #00d9ef;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        /* PIE DE PÁGINA */
+
+        .footer {
+            background-color: #191f2e;
+            color: #aeb8c9;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* DISEÑO RESPONSIVE */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .navbar-derecha {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+
+    <header class="navbar">
+
+        <a href="{% url 'inicio' %}" class="logo">
+            GAMEVAULT
+        </a>
+
+        <nav class="navbar-derecha">
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'inicio' %}">
+                    Inicio
+                </a>
+
+                <span>
+                    Hola, {{ user.username }}
+                </span>
+
+                <form method="post"
+                      action="{% url 'logout' %}"
+                      class="form-logout">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="boton">
+                        Cerrar sesión
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Iniciar sesión
+                </a>
+
+                <a href="{% url 'registro' %}" class="boton">
+                    Registrarse
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    </header>
+
+
+    <!-- MENSAJES DEL SISTEMA -->
+
+    {% if messages %}
+
+        <div class="mensajes">
+
+            {% for message in messages %}
+
+                <div class="mensaje">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- CONTENIDO DE CADA PÁGINA -->
+
+    <main class="contenido-principal">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 GameVault.
+            Todos los derechos reservados.
+        </p>
+
+        <p>
+            Tu espacio para descubrir y compartir videojuegos.
+        </p>
+
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>

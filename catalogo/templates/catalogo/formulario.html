@@ -1,0 +1,158 @@
+
+{% extends 'catalogo/base.html' %}
+
+{% block title %}
+    {% if resena %}
+        Editar reseña | GameVault
+    {% else %}
+        Escribir reseña | GameVault
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .formulario-container {
+        min-height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 35px 20px;
+    }
+
+    .formulario-card {
+        width: 100%;
+        max-width: 650px;
+        background: #1d2638;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,.3);
+    }
+
+    .formulario-card h1 {
+        color: #00d9ef;
+        margin-bottom: 12px;
+    }
+
+    .formulario-card .subtitulo {
+        color: #cbd5e1;
+        margin-bottom: 25px;
+    }
+
+    .formulario-card label {
+        display: block;
+        margin: 18px 0 8px;
+        font-weight: bold;
+    }
+
+    .formulario-card input,
+    .formulario-card textarea,
+    .formulario-card select {
+        width: 100%;
+        padding: 13px;
+        background: #101827;
+        color: white;
+        border: 1px solid #40516b;
+        border-radius: 7px;
+    }
+
+    .formulario-card textarea {
+        min-height: 140px;
+        resize: vertical;
+    }
+
+    .formulario-card input:focus,
+    .formulario-card textarea:focus,
+    .formulario-card select:focus {
+        outline: none;
+        border-color: #00d9ef;
+    }
+
+    .errores {
+        color: #ff7777;
+        margin-top: 7px;
+        font-size: 13px;
+    }
+
+    .boton-formulario {
+        display: inline-block;
+        padding: 13px 20px;
+        margin-top: 25px;
+        background: #00bfd8;
+        color: #07111b;
+        border: none;
+        border-radius: 7px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .boton-volver {
+        background: #34445e;
+        color: white;
+        margin-left: 8px;
+    }
+</style>
+
+<div class="formulario-container">
+
+    <div class="formulario-card">
+
+        {% if resena %}
+            <h1>Editar reseña</h1>
+            <p class="subtitulo">
+                Modifica tu opinión sobre {{ juego.titulo }}.
+            </p>
+        {% else %}
+            <h1>Escribir una reseña</h1>
+            <p class="subtitulo">
+                Comparte tu experiencia con {{ juego.titulo }}.
+            </p>
+        {% endif %}
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {% for campo in formulario %}
+
+                <label for="{{ campo.id_for_label }}">
+                    {{ campo.label }}
+                </label>
+
+                {{ campo }}
+
+                {% for error in campo.errors %}
+                    <div class="errores">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+
+            {% endfor %}
+
+            {% for error in formulario.non_field_errors %}
+                <div class="errores">
+                    {{ error }}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="boton-formulario">
+                {% if resena %}
+                    Guardar cambios
+                {% else %}
+                    Publicar reseña
+                {% endif %}
+            </button>
+
+            <a href="{% url 'detalle_juego' juego.id %}"
+               class="boton-formulario boton-volver">
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

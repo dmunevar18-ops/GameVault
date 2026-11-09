@@ -1,0 +1,158 @@
+
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Iniciar sesión | GameVault{% endblock %}
+
+{% block content %}
+
+<style>
+    .auth-container {
+        min-height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 20px;
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 430px;
+        background: #1d2638;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .auth-card h1 {
+        text-align: center;
+        color: #00d9ef;
+        margin-bottom: 12px;
+    }
+
+    .auth-card .subtitulo {
+        text-align: center;
+        color: #cbd5e1;
+        margin-bottom: 25px;
+    }
+
+    .auth-card label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .auth-card input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        background: #101827;
+        color: white;
+        border: 1px solid #40516b;
+        border-radius: 7px;
+    }
+
+    .auth-card input:focus {
+        outline: none;
+        border-color: #00d9ef;
+    }
+
+    .auth-card button {
+        width: 100%;
+        padding: 13px;
+        background: #00bfd8;
+        color: #07111b;
+        border: none;
+        border-radius: 7px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .auth-card button:hover {
+        background: #00e5ff;
+    }
+
+    .auth-enlace {
+        text-align: center;
+        margin-top: 22px;
+        color: #cbd5e1;
+    }
+
+    .auth-enlace a {
+        color: #00d9ef;
+        text-decoration: none;
+    }
+
+    .auth-error {
+        color: #ff7777;
+        margin-bottom: 15px;
+    }
+
+    .auth-help {
+        color: #aeb8c9;
+        font-size: 12px;
+        margin-top: -15px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h1>Bienvenido a GameVault</h1>
+
+        <p class="subtitulo">
+            Inicia sesión para compartir tus opiniones.
+        </p>
+
+        {% if form.errors %}
+            <div class="auth-error">
+                Usuario o contraseña incorrectos.
+                Inténtalo nuevamente.
+            </div>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p class="auth-error">
+                    No tienes permiso para acceder a esa página.
+                </p>
+            {% endif %}
+        {% endif %}
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <label for="{{ form.username.id_for_label }}">
+                Nombre de usuario
+            </label>
+
+            {{ form.username }}
+
+            <label for="{{ form.password.id_for_label }}">
+                Contraseña
+            </label>
+
+            {{ form.password }}
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <button type="submit">
+                Iniciar sesión
+            </button>
+
+        </form>
+
+        <div class="auth-enlace">
+            ¿Todavía no tienes una cuenta?
+            <a href="{% url 'registro' %}">
+                Regístrate aquí
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

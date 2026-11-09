@@ -1,0 +1,128 @@
+
+/* CONTENEDOR PRINCIPAL */
+
+.catalogo-container {
+    padding: 35px;
+    color: white;
+    background-color: #10131d;
+    min-height: 100vh;
+}
+
+.catalogo-encabezado {
+    margin-bottom: 25px;
+}
+
+.catalogo-encabezado h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.catalogo-encabezado p {
+    font-size: 16px;
+    color: #d5d9e5;
+}
+
+/* DISTRIBUCIÓN DE VIDEOJUEGOS */
+
+.juegos-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(260px, 1fr)
+    );
+    gap: 25px;
+}
+
+/* TARJETAS */
+
+.juego-card {
+    background-color: #1d2638;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.juego-card:hover {
+    transform: translateY(-5px);
+}
+
+/* PORTADAS */
+
+.imagen-juego {
+    width: 100%;
+    height: 320px;
+    object-fit: contain;
+    background-color: #151b29;
+    display: block;
+}
+
+.imagen-placeholder {
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #151b29;
+    color: #00d9ff;
+}
+
+.imagen-placeholder span {
+    font-size: 60px;
+}
+
+/* INFORMACIÓN */
+
+.juego-informacion {
+    padding: 20px;
+}
+
+.juego-informacion h2 {
+    font-size: 21px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.juego-descripcion {
+    color: #d5d9e5;
+    line-height: 1.5;
+}
+
+.juego-informacion p {
+    margin-bottom: 12px;
+}
+
+/* BOTÓN */
+
+.boton-detalle {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 11px 15px;
+    background-color: #00c7e8;
+    color: #07111b;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.boton-detalle:hover {
+    background-color: #00e5ff;
+}
+
+/* MENSAJE SIN VIDEOJUEGOS */
+
+.sin-juegos {
+    color: white;
+    font-size: 18px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+    .catalogo-container {
+        padding: 20px;
+    }
+
+    .juegos-grid {
+        grid-template-columns: 1fr;
+    }
+}

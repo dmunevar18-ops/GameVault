@@ -1,0 +1,81 @@
+
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="catalogo-container">
+
+    <div class="catalogo-encabezado">
+        <h1>Catálogo de videojuegos</h1>
+        <p>
+            Explora nuestros videojuegos y descubre
+            las opiniones de otros jugadores.
+        </p>
+    </div>
+
+    <div class="juegos-grid">
+
+        {% for juego in juegos %}
+
+        <article class="juego-card">
+
+            {% if juego.imagen %}
+
+                <img
+                    src="{{ juego.imagen.url }}"
+                    alt="{{ juego.titulo }}"
+                    class="imagen-juego"
+                >
+
+            {% else %}
+
+                <div class="imagen-placeholder">
+                    <span>🎮</span>
+                    <p>Imagen no disponible</p>
+                </div>
+
+            {% endif %}
+
+            <div class="juego-informacion">
+
+                <h2>{{ juego.titulo }}</h2>
+
+                <p class="juego-descripcion">
+                    {{ juego.descripcion }}
+                </p>
+
+                <p>
+                    <strong>Plataforma:</strong>
+                    {{ juego.plataforma }}
+                </p>
+
+                <p>
+                    <strong>Año:</strong>
+                    {{ juego.anio_lanzamiento }}
+                </p>
+
+                <a
+                    href="{% url 'detalle_juego' juego.id %}"
+                    class="boton-detalle"
+                >
+                    Ver videojuego y reseñas
+                </a>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+            <p class="sin-juegos">
+                Todavía no hay videojuegos registrados.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

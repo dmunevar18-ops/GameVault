@@ -1,0 +1,131 @@
+
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Eliminar reseña | GameVault{% endblock %}
+
+{% block content %}
+
+<style>
+    .eliminar-container {
+        min-height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 20px;
+    }
+
+    .eliminar-card {
+        width: 100%;
+        max-width: 520px;
+        background: #1d2638;
+        padding: 35px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,.3);
+    }
+
+    .eliminar-icono {
+        font-size: 55px;
+        margin-bottom: 15px;
+    }
+
+    .eliminar-card h1 {
+        color: #ff6565;
+        margin-bottom: 20px;
+    }
+
+    .eliminar-card p {
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .resena-preview {
+        background: #101827;
+        padding: 18px;
+        border-radius: 8px;
+        margin: 20px 0;
+        text-align: left;
+        color: white;
+    }
+
+    .boton-eliminar {
+        padding: 12px 20px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .boton-eliminar:hover {
+        background: #b52a37;
+    }
+
+    .boton-cancelar {
+        display: inline-block;
+        padding: 12px 20px;
+        margin-left: 8px;
+        background: #34445e;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="eliminar-container">
+
+    <div class="eliminar-card">
+
+        <div class="eliminar-icono">
+            ⚠️
+        </div>
+
+        <h1>Eliminar reseña</h1>
+
+        <p>
+            ¿Estás seguro de que deseas eliminar esta reseña?
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="resena-preview">
+
+            <p>
+                <strong>Videojuego:</strong>
+                {{ resena.juego.titulo }}
+            </p>
+
+            <p>
+                <strong>Comentario:</strong>
+                {{ resena.comentario }}
+            </p>
+
+            <p>
+                <strong>Calificación:</strong>
+                {{ resena.calificacion }} / 5
+            </p>
+
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <button type="submit" class="boton-eliminar">
+                Sí, eliminar reseña
+            </button>
+
+            <a href="{% url 'detalle_juego' resena.juego.id %}"
+               class="boton-cancelar">
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
